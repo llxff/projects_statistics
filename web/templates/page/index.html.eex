@@ -1,1 +1,1 @@
-<script>localStorage.setItem("csrfToken", "<%= get_csrf_token %>");</script>
+<script>localStorage.setItem("csrfToken", "<%= get_csrf_token() %>");</script>

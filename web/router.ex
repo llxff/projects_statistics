@@ -23,5 +23,6 @@ defmodule ProjectsStatistics.Router do
      pipe_through :api
 
      get "/projects", ProjectsController, :index
+     get "/data_types", DataTypesController, :index
    end
 end

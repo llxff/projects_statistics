@@ -9,3 +9,9 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+ProjectsStatistics.Repo.insert!(%ProjectsStatistics.DataType{name: "Ruby"})
+ProjectsStatistics.Repo.insert!(%ProjectsStatistics.DataType{name: "Javascript"})
+ProjectsStatistics.Repo.insert!(%ProjectsStatistics.DataType{name: "CSS"})
+ProjectsStatistics.Repo.insert!(%ProjectsStatistics.DataType{name: "View"})
+ProjectsStatistics.Repo.insert!(%ProjectsStatistics.DataType{name: "Tests"})

@@ -1,6 +1,8 @@
 defmodule ProjectsStatistics.Project do
   use ProjectsStatistics.Web, :model
 
+  alias ProjectsStatistics.Version
+
   @fields [
     :name,
     :description
@@ -11,6 +13,8 @@ defmodule ProjectsStatistics.Project do
   schema "projects" do
     field :name, :string
     field :description, :string
+
+    has_many :versions, Version
   end
 
   def changeset(struct, params \\ %{}) do

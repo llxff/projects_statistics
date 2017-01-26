@@ -26,5 +26,7 @@ defmodule ProjectsStatistics.Router do
      get "/projects/:id/versions", VersionsController, :index
 
      get "/data_types", DataTypesController, :index
+
+     get "/versions/:id/data", DataController, :index
    end
 end

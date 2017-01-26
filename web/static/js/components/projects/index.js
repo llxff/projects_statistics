@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 
 class Projects extends React.Component {
   render() {
-    <div><p>Проекты</p></div>
+    return (
+      <div>
+        <p>Проекты</p>
+        <p>{ localStorage.getItem("csrfToken") }</p>
+      </div>
+    )
   }
 }
 

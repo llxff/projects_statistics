@@ -1,6 +1,6 @@
 import React       from "react";
-import { connect } from 'react-redux';
-import Actions     from '../../actions/projects';
+import { connect } from "react-redux";
+import Actions     from "../../actions/projects";
 
 class Projects extends React.Component {
   componentDidMount() {

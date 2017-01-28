@@ -1,6 +1,7 @@
 import React       from "react";
 import { connect } from "react-redux";
 import Actions     from "../../actions/projects";
+import NewData    from "../new_data";
 
 class Projects extends React.Component {
   componentDidMount() {
@@ -12,38 +13,8 @@ class Projects extends React.Component {
   }
 
   render() {
-    const { projects } = this.props;
-
     return (
-      <table className="table">
-        <caption>Проекты</caption>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Название</th>
-            <th>Описание</th>
-            <th>
-              <a className="btn btn-success">+</a>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            projects.map((project) => {
-              return (
-                <tr>
-                  <th scope="row">{ project.id }</th>
-                  <td>{ project.name }</td>
-                  <td>{ project.description }</td>
-                  <td>
-                    <a href="#">Редактировать</a>
-                  </td>
-                </tr>
-              )
-            })
-          }
-        </tbody>
-      </table>
+      <NewData projects={ this.props.projects } />
     )
   }
 }

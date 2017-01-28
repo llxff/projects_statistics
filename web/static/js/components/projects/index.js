@@ -1,7 +1,7 @@
 import React       from "react";
 import { connect } from "react-redux";
 import Actions     from "../../actions/projects";
-import NewData    from "../new_data";
+import VersionForm    from "../forms/version";
 
 class Projects extends React.Component {
   componentDidMount() {
@@ -14,7 +14,7 @@ class Projects extends React.Component {
 
   render() {
     return (
-      <NewData projects={ this.props.projects } />
+      <VersionForm projects={ this.props.projects } />
     )
   }
 }

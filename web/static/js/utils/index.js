@@ -14,6 +14,18 @@ export function httpGet(url) {
     .then(parseJSON);
 }
 
+export function httpPost(url, data) {
+  const body = JSON.stringify(data);
+
+  return fetch(url, {
+    method: 'post',
+    headers: defaultHeaders,
+    body: body,
+  })
+  .then(checkStatus)
+  .then(parseJSON);
+}
+
 export function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;

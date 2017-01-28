@@ -13,6 +13,8 @@ defmodule ProjectsStatistics.Version do
   schema "versions" do
     field :name, :string
     belongs_to :project, Project
+
+    timestamps()
   end
 
   def changeset(struct, params \\ %{}) do

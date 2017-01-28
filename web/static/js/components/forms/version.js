@@ -1,9 +1,11 @@
-import React from "react";
+import React       from "react";
+import Actions     from "../../actions/versions";
+import { connect } from "react-redux";
 
 class VersionForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { project_id: '', version: '' };
+    this.state = { projectId: '', version: '' };
   }
 
   render() {
@@ -13,7 +15,7 @@ class VersionForm extends React.Component {
       <form>
         <div className="form-group">
           <label htmlFor="projectSelect">Проект</label>
-          <select id="projectSelect" className="form-control" value={ this.state.project_id } onChange={ ::this.handleProjectChange }>
+          <select id="projectSelect" className="form-control" value={ this.state.projectId } onChange={ ::this.handleProjectChange }>
             <option disabled>Выберите проект...</option>
             {
               projects.map((project) => {
@@ -29,20 +31,45 @@ class VersionForm extends React.Component {
           <input type="text"
                  className="form-control"
                  id="versionInput"
-                 placeholder="1.0.0" />
+                 placeholder="1.0.0"
+                 value={ this.state.value }
+                 onChange={ ::this.handleVersionChange } />
+          <div>
+            { ::this.renderError() }
+          </div>
         </div>
-        <button type="submit" className="btn btn-default">Сохранить</button>
+
+        <a className="btn btn-default" onClick={ ::this.saveVersion }>Сохранить</a>
       </form>
     )
   }
 
   handleProjectChange(event) {
-    this.setState({ project_id: event.target.value });
+    this.setState({ projectId: event.target.value });
   }
 
   handleVersionChange(event) {
     this.setState({ version: event.target.value });
   }
+
+  renderError() {
+    const { error } = this.props;
+
+    if(error) {
+      return (
+        <p className="text-danger">{ error }</p>
+      )
+    }
+  }
+
+  saveVersion() {
+    this.props.dispatch(Actions.createVersion(this.state.projectId, this.state.version));
+  }
 }
 
-export default VersionForm;
+const mapStateToProps = (state) => ({
+  error: state.versions.error
+});
+
+export default connect(mapStateToProps)(VersionForm);
+

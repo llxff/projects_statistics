@@ -9,4 +9,10 @@ defmodule ProjectsStatistics.VersionRepo do
     |> where(project_id: ^project_id)
     |> Repo.all
   end
+
+  def create(project_id, name) do
+    %Version{}
+    |> Version.changeset(%{project_id: project_id, name: name})
+    |> Repo.insert
+  end
 end

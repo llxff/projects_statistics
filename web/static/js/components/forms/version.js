@@ -11,18 +11,27 @@ class VersionForm extends React.Component {
 
     return (
       <form>
-        <select value={ this.state.project_id } onChange={ ::this.handleProjectChange }>
-          <option></option>
-          {
-            projects.map((project) => {
-              return (
-                <option key={ project.id } value={ project.id }>{ project.name }</option>
-              )
-            })
-          }
-        </select>
-
-        <input type="text" value={ this.state.version } onChange={ ::this.handleVersionChange } />
+        <div className="form-group">
+          <label htmlFor="projectSelect">Проект</label>
+          <select id="projectSelect" className="form-control" value={ this.state.project_id } onChange={ ::this.handleProjectChange }>
+            <option disabled>Выберите проект...</option>
+            {
+              projects.map((project) => {
+                return (
+                  <option key={ project.id } value={ project.id }>{ project.name }</option>
+                )
+              })
+            }
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="versionInput">Версия</label>
+          <input type="text"
+                 className="form-control"
+                 id="versionInput"
+                 placeholder="1.0.0" />
+        </div>
+        <button type="submit" className="btn btn-default">Сохранить</button>
       </form>
     )
   }

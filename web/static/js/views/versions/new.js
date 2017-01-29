@@ -1,9 +1,9 @@
 import React       from "react";
 import { connect } from "react-redux";
 import Actions     from "../../actions/projects";
-import VersionForm    from "../forms/version";
+import VersionForm from "../../components/forms/version";
 
-class Projects extends React.Component {
+class NewVersionView extends React.Component {
   componentDidMount() {
     const { dispatch, projects } = this.props;
 
@@ -23,4 +23,4 @@ const mapStateToProps = (state) => ({
   projects: state.projects.projects
 });
 
-export default connect(mapStateToProps)(Projects);
+export default connect(mapStateToProps)(NewVersionView);

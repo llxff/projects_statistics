@@ -13,22 +13,22 @@ defmodule ProjectsStatistics.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api", ProjectsStatistics do
+    pipe_through :api
+
+    get "/projects", ProjectsController, :index
+
+    get "/projects/:id/versions", VersionsController, :index
+    post "/projects/:id/versions", VersionsController, :create
+
+    get "/data_types", DataTypesController, :index
+
+    get "/versions/:id/data", DataController, :index
+  end
+
   scope "/", ProjectsStatistics do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/*path", PageController, :index
   end
-
-   scope "/api", ProjectsStatistics do
-     pipe_through :api
-
-     get "/projects", ProjectsController, :index
-
-     get "/projects/:id/versions", VersionsController, :index
-     post "/projects/:id/versions", VersionsController, :create
-
-     get "/data_types", DataTypesController, :index
-
-     get "/versions/:id/data", DataController, :index
-   end
 end

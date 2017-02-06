@@ -5,14 +5,20 @@ import { connect }       from "react-redux";
 class HomeIndexView extends React.Component {
   render() {
     return (
-      <div><a href="#" onClick={ ::this.goToNewVersionForm }>Новая версия</a></div>
+      <div>
+        <a href="#" onClick={ ::this.goTo("/versions/new") }>Новая версия</a>
+        <span> </span>
+        <a href="#" onClick={ ::this.goTo("/projects/new") }>Новый проект</a>
+      </div>
     );
   }
 
-  goToNewVersionForm() {
-    this.props.dispatch(routerActions.push("/versions/new"));
+  goTo(link) {
+    return () => {
+      this.props.dispatch(routerActions.push(link));
 
-    return false;
+      return false;
+    };
   }
 }
 

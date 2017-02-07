@@ -17,6 +17,7 @@ defmodule ProjectsStatistics.Router do
     pipe_through :api
 
     get "/projects", ProjectsController, :index
+    post "/projects", ProjectsController, :create
 
     get "/projects/:id/versions", VersionsController, :index
     post "/projects/:id/versions", VersionsController, :create

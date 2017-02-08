@@ -20,7 +20,7 @@ const Actions = {
       httpPost("/api/projects", project)
         .then(() => {
           dispatch({ type: Constants.PROJECT_CREATED });
-          dispatch(routerActions.push("/"))
+          dispatch(routerActions.push("/"));
         })
         .catch((error) => {
           error.response.json()

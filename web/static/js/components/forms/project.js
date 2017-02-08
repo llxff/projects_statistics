@@ -57,6 +57,8 @@ class ProjectForm extends React.Component {
     this.props.dispatch(Actions.createProject(this.state));
   }
 }
-const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+  error: state.projects.error
+});
 
 export default connect(mapStateToProps)(ProjectForm);

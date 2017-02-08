@@ -2,7 +2,8 @@ import Constants from '../constants';
 
 const initialState = {
   projects: [],
-  data_types: []
+  data_types: [],
+  error: null
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -12,6 +13,9 @@ export default function reducer(state = initialState, action = {}) {
 
     case Constants.SET_DATA_TYPES:
       return { data_types: action.data_types };
+
+    case Constants.PROJECT_ERROR:
+      return { error: action.error };
 
     default:
       return state;

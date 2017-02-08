@@ -15,7 +15,7 @@ defmodule ProjectsStatistics.VersionsController do
         conn
         |> put_status(:ok)
         |> render("show.json", version: version)
-      {:error, version} ->
+      {:error, _version} ->
         conn
         |> put_status(:unprocessable_entity)
         |> render("error.json")

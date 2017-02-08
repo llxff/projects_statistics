@@ -1,6 +1,4 @@
 defmodule ProjectsStatistics.ProjectRepo do
-  import Ecto.Query
-
   alias ProjectsStatistics.Repo
   alias ProjectsStatistics.Project
 

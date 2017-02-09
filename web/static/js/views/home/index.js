@@ -3,6 +3,7 @@ import { routerActions } from "react-router-redux";
 import { connect }       from "react-redux";
 import Actions           from "../../actions/projects";
 import Projects          from "../../components/index/projects";
+import { Link }          from "react-router";
 
 class HomeIndexView extends React.Component {
   componentDidMount() {
@@ -16,22 +17,14 @@ class HomeIndexView extends React.Component {
   render() {
     return (
       <div>
-        <a href="#" onClick={ ::this.goTo("/versions/new") }>Новая версия</a>
+        <Link to="/versions/new">Новая версия</Link>
         <span> </span>
-        <a href="#" onClick={ ::this.goTo("/projects/new") }>Новый проект</a>
+        <Link to="/projects/new">Новый проект</Link>
         <div>
           <Projects projects={ this.props.projects } />
         </div>
       </div>
     );
-  }
-
-  goTo(link) {
-    return () => {
-      this.props.dispatch(routerActions.push(link));
-
-      return false;
-    };
   }
 }
 

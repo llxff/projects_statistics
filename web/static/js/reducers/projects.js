@@ -9,13 +9,13 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case Constants.SET_PROJECTS:
-      return { projects: action.projects };
+      return { ...state, projects: action.projects };
 
     case Constants.SET_DATA_TYPES:
-      return { data_types: action.data_types };
+      return { ...state, data_types: action.data_types };
 
     case Constants.PROJECT_ERROR:
-      return { error: action.error };
+      return { ...state, error: action.error };
 
     default:
       return state;

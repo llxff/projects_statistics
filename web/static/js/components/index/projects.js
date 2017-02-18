@@ -19,7 +19,7 @@ class Projects extends React.Component {
             return(
               <tr key={ project.id }>
                 <td>{ project.id }</td>
-                <td><Link to={ `/projects/${ project.id }/data` }>{ project.name }</Link></td>
+                <td><Link to={ `/projects/${ project.id }` }>{ project.name }</Link></td>
                 <td>{ project.description }</td>
               </tr>
             )

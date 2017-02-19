@@ -5,26 +5,16 @@ import { connect } from "react-redux";
 class VersionForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { projectId: '', version: '' };
+    this.state = { version: '' };
   }
 
   render() {
-    const { projects } = this.props;
+    const { project } = this.props;
 
     return (
       <form>
         <div className="form-group">
-          <label htmlFor="projectSelect">Проект</label>
-          <select id="projectSelect" className="form-control" value={ this.state.projectId } onChange={ ::this.handleProjectChange }>
-            <option disabled>Выберите проект...</option>
-            {
-              projects.map((project) => {
-                return (
-                  <option key={ project.id } value={ project.id }>{ project.name }</option>
-                )
-              })
-            }
-          </select>
+          <p>{ project.name }</p>
         </div>
         <div className="form-group">
           <label htmlFor="versionInput">Версия</label>
@@ -44,10 +34,6 @@ class VersionForm extends React.Component {
     )
   }
 
-  handleProjectChange(event) {
-    this.setState({ projectId: event.target.value });
-  }
-
   handleVersionChange(event) {
     this.setState({ version: event.target.value });
   }
@@ -63,7 +49,10 @@ class VersionForm extends React.Component {
   }
 
   saveVersion() {
-    this.props.dispatch(Actions.createVersion(this.state.projectId, this.state.version));
+    const { project, dispatch } = this.props;
+    const { version } = this.state;
+
+    dispatch(Actions.createVersion(project.id, version));
   }
 }
 

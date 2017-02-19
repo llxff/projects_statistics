@@ -1,21 +1,22 @@
-import React       from "react";
-import { connect } from "react-redux";
-import Actions     from "../../actions/projects";
-import VersionForm from "../../components/forms/version";
+import React          from "react";
+import { connect }    from "react-redux";
+import InjectProjects from "../../inject/projects";
+import VersionForm    from "../../components/forms/version";
+import find           from "lodash/find"
+
 
 class NewVersionView extends React.Component {
-  componentDidMount() {
-    const { dispatch, projects } = this.props;
-
-    if (!projects.length) {
-      dispatch(Actions.loadProjects());
-    }
-  }
-
   render() {
-    return (
-      <VersionForm projects={ this.props.projects } />
-    )
+    const { params: { projectId }, projects } = this.props;
+
+    if(projects.length) {
+      const project = find(projects, { id: +projectId });
+
+      return <VersionForm project={ project } />
+    }
+    else {
+      return <div>...</div>
+    }
   }
 }
 
@@ -23,4 +24,4 @@ const mapStateToProps = (state) => ({
   projects: state.projects.projects
 });
 
-export default connect(mapStateToProps)(NewVersionView);
+export default connect(mapStateToProps)(InjectProjects(NewVersionView));

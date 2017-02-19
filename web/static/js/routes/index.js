@@ -9,8 +9,8 @@ import ProjectShowView         from '../views/projects/show';
 export default (
   <Route component={ MainLayout }>
     <Route path="/" component={ HomeIndexView } />
-    <Route path="/versions/new" component={ NewVersionView } />
     <Route path="/projects/new" component={ NewProjectView } />
     <Route path="/projects/:projectId" component={ ProjectShowView } />
+    <Route path="/projects/:projectId/versions/new" component={ NewVersionView } />
   </Route>
 );

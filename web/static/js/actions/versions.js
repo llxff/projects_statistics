@@ -9,7 +9,7 @@ Actions.createVersion = (projectId, name) => {
     httpPost(`/api/projects/${ projectId }/versions`, { name: name })
       .then(() => {
         dispatch({ type: Constants.VERSION_CREATED });
-        dispatch(routerActions.push("/"));
+        dispatch(routerActions.push(`/projects/${ projectId }`));
       })
       .catch((error) => {
         error.response.json()

@@ -1,17 +1,11 @@
-import React       from "react";
-import { connect } from "react-redux";
-import Actions     from "../../actions/projects";
-import find        from "lodash/find"
+import React          from "react";
+import { connect }    from "react-redux";
+import InjectProjects from "../../inject/projects";
+import find           from "lodash/find"
+import { Link }       from "react-router";
+
 
 class ProjectShowView extends React.Component {
-  componentDidMount() {
-    const { dispatch, projects } = this.props;
-
-    if(!projects.length) {
-      dispatch(Actions.loadProjects());
-    }
-  }
-
   render() {
     const { params: { projectId }, projects } = this.props;
 
@@ -19,7 +13,11 @@ class ProjectShowView extends React.Component {
 
     if(project) {
       return (
-        <div>{ project.name }</div>
+        <div>
+          <Link to={ `/projects/${ project.id }/versions/new` }>Новая версия</Link>
+          <span> </span>
+          <span>{ project.name }</span>
+        </div>
       )
     }
     else {
@@ -34,4 +32,4 @@ const mapStateToProps = (state) => ({
   projects: state.projects.projects
 });
 
-export default connect(mapStateToProps)(ProjectShowView);
+export default connect(mapStateToProps)(InjectProjects(ProjectShowView));

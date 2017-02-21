@@ -8,7 +8,7 @@ defmodule ProjectsStatistics.Version do
     :name
   ]
 
-  @derive { Poison.Encoder, only: @fields }
+  @derive { Poison.Encoder, only: [:id | @fields] }
 
   schema "versions" do
     field :name, :string

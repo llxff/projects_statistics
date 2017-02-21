@@ -3,7 +3,7 @@ import { connect }    from "react-redux";
 import InjectProjects from "../../inject/projects";
 import find           from "lodash/find"
 import { Link }       from "react-router";
-
+import Versions       from "../../components/projects/versions"
 
 class ProjectShowView extends React.Component {
   render() {
@@ -17,6 +17,7 @@ class ProjectShowView extends React.Component {
           <Link to={ `/projects/${ project.id }/versions/new` }>Новая версия</Link>
           <span> </span>
           <span>{ project.name }</span>
+          <Versions projectId={ project.id } />
         </div>
       )
     }

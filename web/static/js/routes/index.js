@@ -1,10 +1,11 @@
-import { IndexRoute, Route }  from 'react-router';
-import React                  from 'react';
-import MainLayout             from '../layouts/main';
-import HomeIndexView          from '../views/home';
-import NewVersionView         from '../views/versions/new';
-import NewProjectView         from '../views/projects/new';
-import ProjectShowView         from '../views/projects/show';
+import { IndexRoute, Route } from "react-router";
+import React                 from "react";
+import MainLayout            from "../layouts/main";
+import HomeIndexView         from "../views/home";
+import NewVersionView        from "../views/versions/new";
+import NewProjectView        from "../views/projects/new";
+import ProjectShowView       from "../views/projects/show";
+import VersionShowView       from "../views/versions/show"
 
 export default (
   <Route component={ MainLayout }>
@@ -12,5 +13,6 @@ export default (
     <Route path="/projects/new" component={ NewProjectView } />
     <Route path="/projects/:projectId" component={ ProjectShowView } />
     <Route path="/projects/:projectId/versions/new" component={ NewVersionView } />
+    <Route path="/versions/:versionId" component={ VersionShowView } />
   </Route>
 );

@@ -1,14 +1,13 @@
 import React          from "react";
 import { connect }    from "react-redux";
 import Actions        from "../../actions/versions";
+import { Link }       from "react-router";
 
 class Versions extends React.Component {
   componentDidMount() {
-    const { dispatch, projectId, versions } = this.props;
+    const { dispatch, projectId } = this.props;
 
-    if (!versions) {
-      dispatch(Actions.loadVersions(projectId));
-    }
+    dispatch(Actions.loadVersions(projectId));
   }
 
   render() {
@@ -31,7 +30,7 @@ class Versions extends React.Component {
                 return(
                   <tr key={ version.id }>
                     <td>{ version.id }</td>
-                    <td>{ version.name }</td>
+                    <td><Link to={ `/versions/${ version.id }` }>{ version.name }</Link></td>
                   </tr>
                 )
               })

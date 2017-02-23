@@ -3,12 +3,6 @@ defmodule ProjectsStatistics.VersionsController do
 
   alias ProjectsStatistics.VersionRepo
 
-  def index(conn, params) do
-    conn
-    |> put_status(:ok)
-    |> render("index.json", versions: VersionRepo.of_project(params["id"]))
-  end
-
   def create(conn, %{"id" => project_id, "name" => name}) do
     case VersionRepo.create(project_id, name) do
       {:ok, version} ->

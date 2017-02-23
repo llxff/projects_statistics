@@ -3,12 +3,6 @@ defmodule ProjectsStatistics.ProjectsController do
 
   alias ProjectsStatistics.ProjectRepo
 
-  def index(conn, _params) do
-    conn
-    |> put_status(:ok)
-    |> render("index.json", projects: ProjectRepo.all)
-  end
-
   def create(conn, %{"name" => name, "description" => description}) do
     case ProjectRepo.create(name, description) do
       {:ok, project} ->

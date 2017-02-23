@@ -1,28 +1,24 @@
-import React              from 'react';
-import { Provider }       from 'react-redux';
-import { Router }         from 'react-router';
-import invariant          from 'invariant';
-import routes             from '../routes';
+import React        from "react";
+import { Router }   from "react-router";
+import routes       from "../routes";
+import ApolloClient, { createNetworkInterface, addTypename } from "apollo-client"
+import { ApolloProvider } from "react-apollo"
+
+const client = new ApolloClient({
+  networkInterface: createNetworkInterface('/api'),
+  queryTransformer: addTypename,
+});
 
 export default class Root extends React.Component {
-  _renderRouter() {
-    invariant(
-      this.props.routerHistory,
-      '<Root /> needs either a routingContext or routerHistory to render.'
-    );
-
-    return (
-      <Router history={ this.props.routerHistory }>
-        { routes }
-      </Router>
-    );
-  }
-
   render() {
+    const { routerHistory } = this.props;
+
     return (
-      <Provider store={ this.props.store }>
-        { this._renderRouter() }
-      </Provider>
-    );
+      <ApolloProvider client={ client }>
+        <div>
+          <Router history={ routerHistory } children={ routes } />
+        </div>
+      </ApolloProvider>
+    )
   }
 }

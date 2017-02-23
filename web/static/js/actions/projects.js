@@ -1,20 +1,8 @@
-import Constants   from "../constants";
-import { httpGet, httpPost } from "../utils";
+import Constants         from "../constants";
+import { httpPost }      from "../utils";
 import { routerActions } from "react-router-redux";
 
 const Actions = {
-  loadProjects() {
-    return dispatch => {
-      httpGet("/api/projects")
-        .then(function(data) {
-          dispatch({
-            type: Constants.SET_PROJECTS,
-            projects: data.projects
-          });
-        });
-    };
-  },
-
   createProject(project) {
     return dispatch => {
       httpPost("/api/projects", project)

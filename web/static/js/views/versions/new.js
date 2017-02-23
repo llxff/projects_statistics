@@ -1,27 +1,33 @@
-import React          from "react";
-import { connect }    from "react-redux";
-import InjectProjects from "../../inject/projects";
-import VersionForm    from "../../components/forms/version";
-import find           from "lodash/find"
-
+import React       from "react";
+import { connect } from "react-redux";
+import VersionForm from "../../components/forms/version";
+import { graphql } from "react-apollo"
+import gql         from "graphql-tag"
 
 class NewVersionView extends React.Component {
   render() {
-    const { params: { projectId }, projects } = this.props;
+    const { data: { project } } = this.props;
 
-    if(projects.length) {
-      const project = find(projects, { id: +projectId });
-
+    if(project) {
       return <VersionForm project={ project } />
     }
     else {
-      return <div>...</div>
+      return <div>Loading...</div>
     }
   }
 }
 
-const mapStateToProps = (state) => ({
-  projects: state.projects.projects
-});
+const query = gql`
+  query GetProject($projectId: Int!) {
+    project(id: $projectId) {
+      id,
+      name
+    }
+  }
+`;
 
-export default connect(mapStateToProps)(InjectProjects(NewVersionView));
+const queryOptions = ({ params: { projectId }}) => {
+  return { variables: { projectId: projectId }};
+};
+
+export default graphql(query, { options: queryOptions })(NewVersionView);

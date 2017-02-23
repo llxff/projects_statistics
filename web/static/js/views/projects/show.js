@@ -1,15 +1,12 @@
-import React          from "react";
-import { connect }    from "react-redux";
-import InjectProjects from "../../inject/projects";
-import find           from "lodash/find"
-import { Link }       from "react-router";
-import Versions       from "../../components/projects/versions"
+import React       from "react";
+import { Link }    from "react-router";
+import Versions    from "../../components/projects/versions"
+import { graphql } from "react-apollo"
+import gql         from "graphql-tag"
 
 class ProjectShowView extends React.Component {
   render() {
-    const { params: { projectId }, projects } = this.props;
-
-    const project = find(projects, { id: +projectId });
+    const { data: { project } } = this.props;
 
     if(project) {
       return (
@@ -17,20 +14,33 @@ class ProjectShowView extends React.Component {
           <Link to={ `/projects/${ project.id }/versions/new` }>Новая версия</Link>
           <span> </span>
           <span>{ project.name }</span>
-          <Versions projectId={ project.id } />
+          <Versions versions={ project.versions } />
         </div>
       )
     }
     else {
       return (
-        <div>loading...</div>
+        <div>Loading...</div>
       )
     }
   }
 }
 
-const mapStateToProps = (state) => ({
-  projects: state.projects.projects
-});
+const query = gql`
+  query GetProject($projectId: Int!) {
+    project(id: $projectId) {
+      id,
+      name,
+      versions {
+        id,
+        name
+      }
+    }
+  }
+`;
 
-export default connect(mapStateToProps)(InjectProjects(ProjectShowView));
+const queryOptions = ({ params: { projectId }}) => {
+  return { variables: { projectId: projectId }};
+};
+
+export default graphql(query, { options: queryOptions })(ProjectShowView);

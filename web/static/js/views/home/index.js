@@ -1,25 +1,37 @@
 import React             from "react";
 import { routerActions } from "react-router-redux";
-import { connect }       from "react-redux";
-import InjectProjects    from "../../inject/projects";
 import Projects          from "../../components/index/projects";
 import { Link }          from "react-router";
+import { graphql }       from "react-apollo"
+import gql               from "graphql-tag"
 
 class HomeIndexView extends React.Component {
   render() {
-    return (
-      <div>
-        <Link to="/projects/new">Новый проект</Link>
+    const { data: { projects } } = this.props;
+
+    if (projects) {
+      return (
         <div>
-          <Projects projects={ this.props.projects } />
+          <Link to="/projects/new">Новый проект</Link>
+          <div>
+            <Projects projects={ projects } />
+          </div>
         </div>
-      </div>
-    );
+      )
+    }
+    else {
+      return <div>...</div>
+    }
   }
 }
 
-const mapStateToProps = (state) => ({
-  projects: state.projects.projects
-});
+const query = gql`
+  query {
+    projects {
+      id,
+      name
+    }
+  }
+`;
 
-export default connect(mapStateToProps)(InjectProjects(HomeIndexView));
+export default graphql(query)(HomeIndexView);

@@ -1,11 +1,13 @@
-import React       from "react";
-import { graphql } from "react-apollo";
-import gql         from "graphql-tag";
+import React             from "react";
+import { graphql }       from "react-apollo";
+import gql               from "graphql-tag";
+import { connect }       from "react-redux";
+import { routerActions } from "react-router-redux";
 
 class ProjectForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: "", description: "" };
+    this.state = { name: "", description: "", errors: {} };
   }
 
   render() {
@@ -20,7 +22,7 @@ class ProjectForm extends React.Component {
                  placeholder="Facebook"
                  value={ this.state.name }
                  onChange={ ::this.handleChange("name") } />
-
+          <p className="text-danger">{ this.state.errors["name"] }</p>
         </div>
         <div className="form-group">
           <label htmlFor="descriptionInput">Описание проекта</label>
@@ -31,6 +33,7 @@ class ProjectForm extends React.Component {
                     value={ this.state.description }
                     onChange={ ::this.handleChange("description") }
           ></textarea>
+          <p className="text-danger">{ this.state.errors["description"] }</p>
         </div>
         <a className="btn btn-default" onClick={ ::this.saveProject }>Сохранить</a>
       </form>
@@ -55,7 +58,14 @@ class ProjectForm extends React.Component {
 
   saveProject() {
     this.props.mutate({ variables: this.state }).then(({ data }) => {
-      console.log(data);
+      const { create_project: { errors, project } } = data;
+
+      if (project) {
+        ::this.props.dispatch(routerActions.push("/"))
+      }
+      else {
+        ::this.setState({ errors: errors });
+      }
     });
   }
 }
@@ -74,5 +84,8 @@ const projectMutation = gql`
   }
 `;
 
-export default graphql(projectMutation)(ProjectForm);
+const ProjectFormWithMutation = graphql(projectMutation)(ProjectForm);
+const mapStateToProps = (state) => (state);
+
+export default connect(mapStateToProps)(ProjectFormWithMutation);
 

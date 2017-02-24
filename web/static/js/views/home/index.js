@@ -29,7 +29,8 @@ const query = gql`
   query {
     projects {
       id,
-      name
+      name,
+      description
     }
   }
 `;

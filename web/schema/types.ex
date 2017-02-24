@@ -16,7 +16,7 @@ defmodule ProjectsStatistics.Schema.Types do
 
   object :create_project_response do
     field :project, :project
-    field :errors,  list_of(:project_errors)
+    field :errors,  :project_errors
   end
 
   object :version do

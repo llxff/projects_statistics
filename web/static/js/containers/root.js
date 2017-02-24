@@ -7,8 +7,8 @@ import configureStore     from '../store';
 import { browserHistory } from "react-router";
 
 const client = new ApolloClient({
-  networkInterface: createNetworkInterface('/api'),
-  queryTransformer: addTypename,
+  networkInterface: createNetworkInterface({ uri: '/api' }),
+  queryTransformer: addTypename
 });
 
 const store = configureStore(client, browserHistory);

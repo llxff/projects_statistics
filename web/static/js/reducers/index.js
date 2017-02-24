@@ -3,8 +3,8 @@ import { routerReducer }   from 'react-router-redux';
 import projects            from './projects';
 import versions            from './versions';
 
-export default combineReducers({
+export default {
   routing: routerReducer,
   projects: projects,
   versions: versions
-});
+};

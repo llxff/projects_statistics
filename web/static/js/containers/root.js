@@ -3,20 +3,22 @@ import { Router }   from "react-router";
 import routes       from "../routes";
 import ApolloClient, { createNetworkInterface, addTypename } from "apollo-client"
 import { ApolloProvider } from "react-apollo"
+import configureStore     from '../store';
+import { browserHistory } from "react-router";
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface('/api'),
   queryTransformer: addTypename,
 });
 
+const store = configureStore(client, browserHistory);
+
 export default class Root extends React.Component {
   render() {
-    const { routerHistory } = this.props;
-
     return (
-      <ApolloProvider client={ client }>
+      <ApolloProvider client={ client } store={ store }>
         <div>
-          <Router history={ routerHistory } children={ routes } />
+          <Router history={ browserHistory } children={ routes } />
         </div>
       </ApolloProvider>
     )

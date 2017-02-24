@@ -1,11 +1,11 @@
 import React       from "react";
-import Actions     from "../../actions/projects";
-import { connect } from "react-redux";
+import { graphql } from "react-apollo";
+import gql         from "graphql-tag";
 
 class ProjectForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { name: '', description: '' };
+    this.state = { name: "", description: "" };
   }
 
   render() {
@@ -19,7 +19,7 @@ class ProjectForm extends React.Component {
                  id="nameInput"
                  placeholder="Facebook"
                  value={ this.state.name }
-                 onChange={ ::this.handleChange('name') } />
+                 onChange={ ::this.handleChange("name") } />
 
         </div>
         <div className="form-group">
@@ -29,7 +29,7 @@ class ProjectForm extends React.Component {
                     rows="3"
                     placeholder="Социальная сеть"
                     value={ this.state.description }
-                    onChange={ ::this.handleChange('description') }
+                    onChange={ ::this.handleChange("description") }
           ></textarea>
         </div>
         <a className="btn btn-default" onClick={ ::this.saveProject }>Сохранить</a>
@@ -54,11 +54,25 @@ class ProjectForm extends React.Component {
   }
 
   saveProject() {
-    this.props.dispatch(Actions.createProject(this.state));
+    this.props.mutate({ variables: this.state }).then(({ data }) => {
+      console.log(data);
+    });
   }
 }
-const mapStateToProps = (state) => ({
-  error: state.projects.error
-});
 
-export default connect(mapStateToProps)(ProjectForm);
+const projectMutation = gql`
+  mutation CreateProject($name: String!, $description: String!) {
+    create_project(name: $name, description: $description) {
+      project {
+       id
+      },
+      errors {
+        name,
+        description
+      }
+    }
+  }
+`;
+
+export default graphql(projectMutation)(ProjectForm);
+

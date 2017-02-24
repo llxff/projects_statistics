@@ -20,4 +20,13 @@ defmodule ProjectsStatistics.Schema do
       resolve &VersionResolver.find/2
     end
   end
+
+  mutation do
+    field :create_project, type: :create_project_response do
+      arg :name, non_null(:string)
+      arg :description, :string
+
+      resolve &ProjectResolver.create/2
+    end
+  end
 end

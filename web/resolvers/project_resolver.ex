@@ -1,14 +1,23 @@
 defmodule ProjectsStatistics.ProjectResolver do
-  alias ProjectsStatistics.{Repo, Project}
+  alias ProjectsStatistics.{ProjectRepo, ChangesetErrors}
 
   def all(_args, _info) do
-    {:ok, Repo.all(Project)}
+    ProjectRepo.all()
   end
 
   def find(%{id: id}, _info) do
-    case Repo.get(Project, id) do
+    case ProjectRepo.find(1) do
       nil     -> {:error, "Project id #{id} not found"}
-      version -> {:ok, version}
+      project -> {:ok, project}
+    end
+  end
+
+  def create(args, _info) do
+    case ProjectRepo.create(args) do
+      {:ok, project} ->
+        {:ok, %{ project: project }}
+      {:error, changeset} ->
+        {:ok, %{ errors: ChangesetErrors.to_map(changeset.errors) }}
     end
   end
 end

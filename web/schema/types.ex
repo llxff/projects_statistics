@@ -9,6 +9,16 @@ defmodule ProjectsStatistics.Schema.Types do
     field :versions,    list_of(:version), resolve: assoc(:versions)
   end
 
+  object :project_errors do
+    field :name,        :string
+    field :description, :string
+  end
+
+  object :create_project_response do
+    field :project, :project
+    field :errors,  list_of(:project_errors)
+  end
+
   object :version do
     field :id,      :id
     field :name,    :string

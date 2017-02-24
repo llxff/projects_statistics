@@ -2,9 +2,17 @@ defmodule ProjectsStatistics.ProjectRepo do
   alias ProjectsStatistics.Repo
   alias ProjectsStatistics.Project
 
-  def create(name, description) do
+  def all do
+    {:ok, Repo.all(Project)}
+  end
+
+  def find(id) do
+    Repo.get(Project, id)
+  end
+
+  def create(attributes) do
     %Project{}
-    |> Project.changeset(%{name: name, description: description})
+    |> Project.changeset(attributes)
     |> Repo.insert
   end
 end

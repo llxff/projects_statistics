@@ -6,7 +6,7 @@ defmodule ProjectsStatistics.ProjectResolver do
   end
 
   def find(%{id: id}, _info) do
-    case ProjectRepo.find(1) do
+    case ProjectRepo.find(id) do
       nil     -> {:error, "Project id #{id} not found"}
       project -> {:ok, project}
     end

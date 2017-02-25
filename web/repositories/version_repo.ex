@@ -1,12 +1,14 @@
 defmodule ProjectsStatistics.VersionRepo do
-  import Ecto.Query
-
   alias ProjectsStatistics.Repo
   alias ProjectsStatistics.Version
 
-  def create(project_id, name) do
+  def find(id) do
+    Repo.get(Version, id)
+  end
+
+  def create(attributes) do
     %Version{}
-    |> Version.changeset(%{project_id: project_id, name: name})
+    |> Version.changeset(attributes)
     |> Repo.insert
   end
 end

@@ -8,6 +8,7 @@ defmodule ProjectsStatistics.Schema do
   query do
     field :project, type: :project do
       arg :id, non_null(:id)
+
       resolve &ProjectResolver.find/2
     end
 
@@ -17,6 +18,7 @@ defmodule ProjectsStatistics.Schema do
 
     field :version, type: :version do
       arg :id, non_null(:id)
+
       resolve &VersionResolver.find/2
     end
   end
@@ -27,6 +29,13 @@ defmodule ProjectsStatistics.Schema do
       arg :description, :string
 
       resolve &ProjectResolver.create/2
+    end
+
+    field :create_version, type: :create_version_response do
+      arg :name, non_null(:string)
+      arg :project_id, non_null(:integer)
+
+      resolve &VersionResolver.create/2
     end
   end
 end

@@ -1,10 +1,5 @@
-import { combineReducers } from 'redux';
-import { routerReducer }   from 'react-router-redux';
-import projects            from './projects';
-import versions            from './versions';
+import { routerReducer } from "react-router-redux";
 
 export default {
-  routing: routerReducer,
-  projects: projects,
-  versions: versions
+  routing: routerReducer
 };

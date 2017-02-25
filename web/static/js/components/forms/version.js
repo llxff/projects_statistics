@@ -1,11 +1,13 @@
-import React       from "react";
-import Actions     from "../../actions/versions";
-import { connect } from "react-redux";
+import React             from "react";
+import { connect }       from "react-redux";
+import { graphql }       from "react-apollo";
+import gql               from "graphql-tag";
+import { routerActions } from "react-router-redux";
 
 class VersionForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { version: '' };
+    this.state = { name: "", errors: {} };
   }
 
   render() {
@@ -22,10 +24,10 @@ class VersionForm extends React.Component {
                  className="form-control"
                  id="versionInput"
                  placeholder="1.0.0"
-                 value={ this.state.value }
+                 value={ this.state.name }
                  onChange={ ::this.handleVersionChange } />
           <div>
-            { ::this.renderError() }
+            <p className="text-danger">{ this.state.errors["name"] }</p>
           </div>
         </div>
 
@@ -35,30 +37,44 @@ class VersionForm extends React.Component {
   }
 
   handleVersionChange(event) {
-    this.setState({ version: event.target.value });
-  }
-
-  renderError() {
-    const { error } = this.props;
-
-    if(error) {
-      return (
-        <p className="text-danger">{ error }</p>
-      )
-    }
+    this.setState({ name: event.target.value });
   }
 
   saveVersion() {
-    const { project, dispatch } = this.props;
-    const { version } = this.state;
+    this.props.mutate({
+      variables: {
+        name: this.state.name,
+        projectId: +this.props.project.id
+      }
+    }).then(({ data }) => {
+      const { create_version: { errors, version } } = data;
 
-    dispatch(Actions.createVersion(project.id, version));
+      if (version) {
+        ::this.props.dispatch(routerActions.push(`/projects/${ version.project_id }`));
+      }
+      else {
+        ::this.setState({ errors: errors });
+      }
+    });
   }
 }
 
-const mapStateToProps = (state) => ({
-  error: state.versions.error
-});
+const versionMutation = gql`
+  mutation CreateVersion($projectId: Int!, $name: String!) {
+    create_version(project_id: $projectId, name: $name) {
+      version {
+        project_id
+      },
+      errors {
+        name
+      }
+    }
+  }
+`;
 
-export default connect(mapStateToProps)(VersionForm);
+const VersionFormWithMutation = graphql(versionMutation)(VersionForm);
+
+const mapStateToProps = (state) => (state);
+
+export default connect(mapStateToProps)(VersionFormWithMutation);
 

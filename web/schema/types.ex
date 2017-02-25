@@ -20,9 +20,20 @@ defmodule ProjectsStatistics.Schema.Types do
   end
 
   object :version do
-    field :id,      :id
-    field :name,    :string
-    field :project, :project
+    field :id,         :id
+    field :name,       :string
+    field :project_id, :integer
+    field :project,    :project
+  end
+
+  object :version_errors do
+    field :name,       :string
+    field :project_id, :string
+  end
+
+  object :create_version_response do
+    field :version, :version
+    field :errors,  :version_errors
   end
 
   object :data do

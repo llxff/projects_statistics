@@ -1,7 +1,7 @@
 defmodule ProjectsStatistics.Version do
   use ProjectsStatistics.Web, :model
 
-  alias ProjectsStatistics.Project
+  alias ProjectsStatistics.{Project, Data}
 
   @fields [
     :project_id,
@@ -12,7 +12,9 @@ defmodule ProjectsStatistics.Version do
 
   schema "versions" do
     field :name, :string
+
     belongs_to :project, Project
+    has_many :data, Data
 
     timestamps()
   end
